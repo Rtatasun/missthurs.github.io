@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5, user-scalable=yes">
+    <title>栖居·生活 | 室内设计 & 文创集市</title>
+    <!-- 使用简洁的字体系统，保证中文显示优雅 -->
+    <style>
+        /* 全局重置与变量 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #f7f5f0;  /* 暖白基底，模拟纸张质感 */
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+            color: #2e2e2e;
+            line-height: 1.5;
+            scroll-behavior: smooth;
+        }
+
+        /* 中文优先字体，增加可读性 */
+        h1, h2, h3, h4, .nav-logo, .brand {
+            font-family: 'Noto Serif SC', 'Songti SC', 'Times New Roman', serif;
+            font-weight: 500;
+            letter-spacing: 0.02em;
+        }
+
+        /* 布局容器 */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* 导航栏 */
+        nav {
+            position: sticky;
+            top: 0;
+            background-color: rgba(247, 245, 240, 0.92);
+            backdrop-filter: blur(8px);
+            padding: 16px 0;
+            border-bottom: 1px solid #e2ddd5;
+            z-index: 100;
+        }
+
+        .nav-inner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .nav-logo {
+            font-size: 1.6rem;
+            font-weight: 600;
+            color: #3a2e28;
+            text-decoration: none;
+            letter-spacing: 0.04em;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 32px;
+            font-size: 1rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #4f4a44;
+            font-weight: 400;
+            transition: color 0.2s;
+            border-bottom: 1px solid transparent;
+            padding-bottom: 4px;
+        }
+
+        .nav-links a:hover {
+            color: #9d7b5b;
+            border-bottom-color: #b8a18b;
+        }
+
+        /* 移动端调整 */
+        @media (max-width: 640px) {
+            .nav-inner {
+                flex-direction: column;
+                gap: 12px;
+                align-items: flex-start;
+            }
+            .nav-links {
+                gap: 20px;
+                font-size: 0.9rem;
+                flex-wrap: wrap;
+            }
+            .nav-logo {
+                font-size: 1.4rem;
+            }
+        }
+
+        /* 通用区块间距 */
+        section {
+            padding: 64px 0;
+            border-bottom: 1px solid #e2ddd5;
+        }
+
+        section:last-of-type {
+            border-bottom: none;
+        }
+
+        .section-title {
+            font-size: 2rem;
+            margin-bottom: 16px;
+            color: #3a2e28;
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -8px;
+            width: 48px;
+            height: 3px;
+            background-color: #b8a18b;
+        }
+
+        .section-subhead {
+            font-size: 1.1rem;
+            color: #6b625a;
+            margin-bottom: 40px;
+            max-width: 680px;
+        }
+
+        /* 按钮风格 */
+        .btn {
+            display: inline-block;
+            background-color: #5e4b3c;
+            color: white;
+            text-decoration: none;
+            padding: 10px 26px;
+            border-radius: 40px;
+            font-size: 0.95rem;
+            font-weight: 400;
+            letter-spacing: 0.02em;
+            transition: background 0.2s, transform 0.1s;
+            border: none;
+            cursor: pointer;
+            margin-top: 16px;
+        }
+
+        .btn:hover {
+            background-color: #7d6652;
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 1px solid #9d7b5b;
+            color: #5e4b3c;
+        }
+
+        .btn-outline:hover {
+            background-color: #f0ebe4;
+        }
+
+        /* 首页 hero */
+        .hero {
+            padding: 80px 0 64px;
+            display: flex;
+            align-items: center;
+            gap: 48px;
+            flex-wrap: wrap;
+            border-bottom: 1px solid #e2ddd5;
+        }
+
+        .hero-content {
+            flex: 1 1 320px;
+        }
+
+        .hero-content h1 {
+            font-size: 3rem;
+            line-height: 1.2;
+            color: #2e2620;
+            margin-bottom: 24px;
+            font-weight: 600;
+        }
+
+        .hero-content p {
+            font-size: 1.15rem;
+            color: #5e554c;
+            margin-bottom: 32px;
+            max-width: 520px;
+        }
+
+        .hero-image {
+            flex: 1 1 300px;
+            background-color: #e4dbd1;
+            border-radius: 24px;
+            height: 280px;
+            background-image: url('https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?q=80&w=2070&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center 40%;
+            box-shadow: 0 18px 30px -10px rgba(0,0,0,0.15);
+        }
+
+        @media (max-width: 800px) {
+            .hero-content h1 {
+                font-size: 2.4rem;
+            }
+            .hero {
+                padding: 48px 0;
+                gap: 32px;
+            }
+            .hero-image {
+                height: 200px;
+            }
+        }
+
+        /* 产品网格 —— 家居产品分类 */
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+            gap: 24px;
+            margin-top: 16px;
+        }
+
+        .product-card {
+            background: white;
+            border-radius: 20px;
+            padding: 24px 16px 20px;
+            text-align: center;
+            box-shadow: 0 6px 18px rgba(0,0,0,0.02);
+            border: 1px solid #efe9e1;
+            transition: all 0.2s ease;
+        }
+
+        .product-card:hover {
+            border-color: #cbb9a6;
+            box-shadow: 0 12px 24px -12px rgba(70, 50, 30, 0.12);
+        }
+
+        .product-icon {
+            font-size: 2rem;
+            margin-bottom: 12px;
+            display: block;
+            font-family: 'Segoe UI', sans-serif;
+            opacity: 0.85;
+        }
+
+        .product-card h3 {
+            font-size: 1.25rem;
+            margin-bottom: 6px;
+            font-weight: 500;
+        }
+
+        .product-card p {
+            font-size: 0.9rem;
+            color: #7e736b;
+        }
+
+        /* 集市板块 */
+        .market-highlight {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 40px;
+            margin: 32px 0 24px;
+            align-items: center;
+        }
+
+        .market-card {
+            flex: 1 1 280px;
+            background: #ffffffd9;
+            border-radius: 24px;
+            padding: 28px;
+            border: 1px solid #ece5dd;
+        }
+
+        .market-date {
+            font-size: 0.9rem;
+            color: #9d7b5b;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+            font-weight: 500;
+            margin-bottom: 8px;
+        }
+
+        .market-title {
+            font-size: 1.8rem;
+            margin-bottom: 12px;
+            font-weight: 500;
+        }
+
+        .market-desc {
+            color: #5e554c;
+            margin-bottom: 20px;
+        }
+
+        .tag-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 16px 0 8px;
+        }
+
+        .tag {
+            background-color: #ede7df;
+            color: #5a4a3a;
+            padding: 6px 14px;
+            border-radius: 30px;
+            font-size: 0.85rem;
+            font-weight: 400;
+        }
+
+        .market-image {
+            flex: 1 1 280px;
+            background-color: #dacfc4;
+            border-radius: 24px;
+            min-height: 240px;
+            background-image: url('https://images.unsplash.com/photo-1531058020387-3be344556be6?q=80&w=2070&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center 40%;
+            box-shadow: 0 10px 24px -12px rgba(0,0,0,0.2);
+        }
+
+        /* 文创手作卡片 (三列) */
+        .craft-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 28px;
+            margin: 32px 0 8px;
+        }
+
+        .craft-card {
+            background: white;
+            border-radius: 24px;
+            padding: 32px 24px;
+            text-align: center;
+            border: 1px solid #efe9e1;
+            transition: transform 0.15s;
+        }
+
+        .craft-card:hover {
+            transform: translateY(-4px);
+            border-color: #cdbcac;
+        }
+
+        .craft-emoji {
+            font-size: 2.6rem;
+            margin-bottom: 18px;
+            display: block;
+        }
+
+        .craft-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            font-weight: 500;
+        }
+
+        .craft-card p {
+            color: #6a6058;
+            font-size: 0.95rem;
+            margin-bottom: 20px;
+        }
+
+        .craft-link {
+            color: #9d7b5b;
+            text-decoration: none;
+            font-size: 0.9rem;
+            border-bottom: 1px solid #d9caba;
+            padding-bottom: 2px;
+        }
+
+        .craft-link:hover {
+            color: #5e4b3c;
+        }
+
+        @media (max-width: 700px) {
+            .craft-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+        }
+
+        /* 联系区块 */
+        .contact-section {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 40px;
+            align-items: center;
+            justify-content: space-between;
+            background: #f0ebe4;
+            border-radius: 32px;
+            padding: 48px 40px;
+            margin: 48px 0 32px;
+        }
+
+        .contact-text h2 {
+            font-size: 1.8rem;
+            margin-bottom: 12px;
+            color: #3a2e28;
+        }
+
+        .contact-text p {
+            color: #6b625a;
+            max-width: 360px;
+            margin-bottom: 16px;
+        }
+
+        .contact-links {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .contact-links a {
+            background-color: white;
+            padding: 12px 22px;
+            border-radius: 40px;
+            text-decoration: none;
+            color: #4f4a44;
+            font-size: 0.95rem;
+            border: 1px solid #dacfc4;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .contact-links a:hover {
+            background-color: #5e4b3c;
+            color: white;
+            border-color: #5e4b3c;
+        }
+
+        .qr-placeholder {
+            width: 100px;
+            height: 100px;
+            background-color: #d9cec2;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+            color: #5e554c;
+            text-align: center;
+            padding: 8px;
+            border: 1px dashed #b8a18b;
+        }
+
+        @media (max-width: 600px) {
+            .contact-section {
+                padding: 32px 24px;
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+
+        /* 页脚 */
+        footer {
+            text-align: center;
+            padding: 40px 0 32px;
+            color: #8f847b;
+            font-size: 0.85rem;
+            border-top: 1px solid #e2ddd5;
+        }
+
+        /* 小装饰 */
+        .brand-mark {
+            font-weight: 300;
+            letter-spacing: 0.1em;
+        }
+
+        /* 图片占位说明（实际使用背景图，但无文字） */
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+        }
+
+        /* 外部链接图标简单处理 */
+        .external-icon {
+            font-size: 0.8rem;
+            opacity: 0.7;
+            margin-left: 2px;
+        }
+    </style>
+    <!-- 引入 Noto Serif SC 作为标题字体，增强中文韵味 (可选加载) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- 导航栏 -->
+    <nav>
+        <div class="container nav-inner">
+            <a href="#" class="nav-logo">栖居·生活</a>
+            <div class="nav-links">
+                <a href="#home">首页</a>
+                <a href="#home-products">家居产品</a>
+                <a href="#market">社区集市</a>
+                <a href="#craft">文创手作</a>
+                <a href="#contact">联系</a>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <!-- Hero 首屏 -->
+        <section id="home" style="border-bottom: none; padding-bottom: 0;">
+            <div class="container hero">
+                <div class="hero-content">
+                    <h1>让空间<br>与手作温度共生</h1>
+                    <p>艺术漆、墙纸、地板、地毯、窗帘 —— 精选家居材质；定期举办文创手工艺术品社区集市，汇聚书法、茶叶、手工银饰。在这里，发现日常的诗意。</p>
+                    <a href="#market" class="btn">浏览本期集市 →</a>
+                </div>
+                <div class="hero-image" aria-label="室内设计氛围图"></div>
+            </div>
+        </section>
+
+        <!-- 家居产品 -->
+        <section id="home-products">
+            <div class="container">
+                <h2 class="section-title">家居材质</h2>
+                <p class="section-subhead">从墙面到地面，从触感到光影，我们选择自然与设计兼具的材料。</p>
+                <div class="product-grid">
+                    <div class="product-card">
+                        <span class="product-icon">🎨</span>
+                        <h3>艺术漆</h3>
+                        <p>意大利质感 · 微水泥 · 肌理漆</p>
+                    </div>
+                    <div class="product-card">
+                        <span class="product-icon">📜</span>
+                        <h3>墙纸</h3>
+                        <p>天然纤维 · 手工金箔 · 植物染</p>
+                    </div>
+                    <div class="product-card">
+                        <span class="product-icon">🪵</span>
+                        <h3>地板</h3>
+                        <p>实木复合 · 人字拼 · 烟熏橡木</p>
+                    </div>
+                    <div class="product-card">
+                        <span class="product-icon">🧶</span>
+                        <h3>地毯</h3>
+                        <p>手工羊毛 · 波斯结 · 现代几何</p>
+                    </div>
+                    <div class="product-card">
+                        <span class="product-icon">🪟</span>
+                        <h3>窗帘</h3>
+                        <p>亚麻 · 棉麻混纺 · 遮光卷帘</p>
+                    </div>
+                    <!-- 可以继续添加，但五类已包含全部 -->
+                </div>
+                <div style="margin-top: 40px; text-align: right;">
+                    <a href="#contact" class="btn btn-outline" style="font-size:0.9rem;">获取产品图册 &nbsp;→</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- 社区集市 -->
+        <section id="market" style="background-color: #f3efe9;">
+            <div class="container">
+                <h2 class="section-title">社区集市</h2>
+                <p class="section-subhead">每月的第三个周末，手作人、茶人、书法家与银饰匠人相聚于此。免费入场，可预约摊位。</p>
+                
+                <div class="market-highlight">
+                    <div class="market-card">
+                        <div class="market-date">📅 2025年5月17日 – 18日 · 11:00 – 19:00</div>
+                        <div class="market-title">初夏·手作集</div>
+                        <p class="market-desc">30+ 独立匠人 · 书法现场题扇 · 古法煮茶 · 银饰锻造体验。还有艺术漆小样工作坊，亲手制作专属色板。</p>
+                        <div class="tag-group">
+                            <span class="tag">书法</span>
+                            <span class="tag">茶叶</span>
+                            <span class="tag">手工银饰</span>
+                            <span class="tag">艺术漆体验</span>
+                        </div>
+                        <a href="#" class="btn" style="margin-top: 24px; background-color: #7d6652;">查看摊主名单 →</a>
+                    </div>
+                    <div class="market-image" aria-label="往期集市照片"></div>
+                </div>
+                <div style="display: flex; gap: 16px; flex-wrap: wrap; margin-top: 24px;">
+                    <a href="#" class="btn btn-outline" style="background-color: transparent;">📸 往期回顾</a>
+                    <a href="#" class="btn btn-outline" style="background-color: transparent;">✍️ 申请成为摊主</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- 文创与手作 (书法、茶叶、手工银饰) -->
+        <section id="craft">
+            <div class="container">
+                <h2 class="section-title">文创手作</h2>
+                <p class="section-subhead">除了家居材质，我们长期合作手艺人，将书法、茶与银饰融入生活。</p>
+                <div class="craft-grid">
+                    <div class="craft-card">
+                        <span class="craft-emoji">🖌️</span>
+                        <h3>书法</h3>
+                        <p>手写卷轴、扇面、婚书定制。亦可现场创作，为空间增添笔墨气韵。</p>
+                        <a href="#" class="craft-link">了解作品 →</a>
+                    </div>
+                    <div class="craft-card">
+                        <span class="craft-emoji">🍃</span>
+                        <h3>茶叶</h3>
+                        <p>甄选高山乌龙、古树红茶、老白茶。支持茶席布置与礼品定制。</p>
+                        <a href="#" class="craft-link">查看茶单 →</a>
+                    </div>
+                    <div class="craft-card">
+                        <span class="craft-emoji">🔨</span>
+                        <h3>手工银饰</h3>
+                        <p>每一件都由匠人锻打、錾刻。可预约一对一银戒/手镯体验课。</p>
+                        <a href="#" class="craft-link">预约体验 →</a>
+                    </div>
+                </div>
+                <!-- 附加说明：这些产品也可在集市现场看到 -->
+                <p style="text-align: center; margin-top: 32px; color: #8b7f74; font-size: 0.9rem;">以上作品均在社区集市设有摊位，欢迎线下品鉴。</p>
+            </div>
+        </section>
+
+        <!-- 联系 / 咨询 -->
+        <section id="contact" style="border-bottom: none;">
+            <div class="container">
+                <div class="contact-section">
+                    <div class="contact-text">
+                        <h2>预约 / 咨询</h2>
+                        <p>如需家居产品样品、集市摊位合作或手作定制，欢迎通过以下方式联系。</p>
+                        <div class="contact-links">
+                            <a href="#">📱 微信 (扫码或搜索: qiju_life)</a>
+                            <a href="#">📧 hello@qiju-life.com</a>
+                        </div>
+                        <div style="margin-top: 24px; display: flex; align-items: center; gap: 20px;">
+                            <div class="qr-placeholder">微信二维码<br>(示例)</div>
+                            <div style="font-size: 0.9rem; color: #6b625a;">
+                                <p>添加时请备注“家居”或“集市”</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="flex: 0 0 auto;">
+                        <a href="#" class="btn" style="background-color: #5e4b3c; padding: 12px 36px;">📩 预约到访</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- 页脚 -->
+    <footer>
+        <div class="container">
+            <p class="brand-mark">栖居·生活 · 让日常更贴近自然</p>
+            <p style="margin-top: 12px;">© 2025 栖居·生活 | 展示型网站 · 所有产品请通过微信或邮件咨询购买</p>
+            <p style="margin-top: 8px; font-size: 0.75rem; opacity: 0.7;">本网站由 GitHub Pages 托管 · 静态展示</p>
+        </div>
+    </footer>
+
+    <!-- 简单的悬停平滑滚动脚本 (可选) 但使用 CSS scroll-behavior 已经足够，不需要额外 JS -->
+</body>
+</html>
